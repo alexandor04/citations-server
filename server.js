@@ -46,3 +46,15 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
     console.log(`Serveur actif sur le port ${PORT}`);
 });
+
+app.get('/liste-citations', (req, res) => {
+    const filePath = path.join(__dirname, 'citations.txt');
+
+    fs.readFile(filePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Erreur de lecture:', err);
+            return res.status(500).send('Erreur lors de la lecture du fichier.');
+        }
+        res.type('text/plain').send(data);
+    });
+});
